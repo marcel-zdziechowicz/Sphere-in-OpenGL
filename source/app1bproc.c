@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "openglheader.h"   /* najpierw ten */
-#include <GLFW/glfw3.h>  /* potem ten */
+#include <glfw/glfw3.h>  /* potem ten */
 
 #include "utilities.h"
 #include "lights.h"
@@ -26,8 +26,8 @@ TransBl trans;
 void LoadMyShaders ( void )
 {
   static const char *filename[] =
-    { "app1b0.glsl.vert", "app1b0.glsl.frag",
-      "app1b1.glsl.vert", "app1b1.glsl.geom", "app1b1.glsl.frag" };
+    { "../shaders/app1b0.glsl.vert", "../shaders/app1b0.glsl.frag",
+      "../shaders/app1b1.glsl.vert", "../shaders/app1b1.glsl.geom", "../shaders/app1b1.glsl.frag" };
   static const GLchar *UTBNames[] =
     { "TransBlock", "TransBlock.mm", "TransBlock.vm", "TransBlock.pm",
       "TransBlock.mvpm", "TransBlock.eyepos" };

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "openglheader.h" /* najpierw ten */
-#include <GLFW/glfw3.h>  /* potem ten */
+#include <glfw/glfw3.h>  /* potem ten */
 
 #include "utilities.h"
 #include "lights.h"
