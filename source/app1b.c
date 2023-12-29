@@ -155,7 +155,6 @@ void Initialise ( int argc, char *argv[] )
   GetGLProcAddresses();
   LoadMyShaders();
   InitMyObject();
-  M4x4Identf(a);
 } /*Initialise*/
 
 int main ( int argc, char *argv[] )
