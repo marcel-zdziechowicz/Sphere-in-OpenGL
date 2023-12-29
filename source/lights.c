@@ -7,8 +7,8 @@
 #include "utilities.h"
 #include "lights.h"
 
-GLuint  lsbi, lsbuf, lsbbp;
-GLint   lsbsize, lsbofs[7];
+//GLuint  lsbi, lsbuf, lsbbp;
+//GLint   lsbsize, lsbofs[7];
 LightBl light;
 
 void SetLightAmbient ( int l, GLfloat amb[4] )
