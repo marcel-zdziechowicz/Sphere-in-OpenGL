@@ -6,7 +6,7 @@
 
 Long story short. While I was learning Computer Graphics from book ["_OpenGL i GLSL (nie taki krótki kurs)_"](https://helion.pl/ksiazki/opengl-i-glsl-nie-taki-krotki-kurs-czesc-i-przemyslaw-kiciak,e_1ha3.htm#format/e) by Przemysław Kiciak I thought of making a sphere. And that's it. What did you think, that I will write some hearbreaking story? It was just an idea and I made it real.
 
-![](https://github.com/marcel-zdziechowicz/Sphere-in-OpenGL/misc/Sphere.gif)
+![How did this happen!?](https://github.com/marcel-zdziechowicz/Sphere-in-OpenGL/misc/Sphere.gif "Sphere")
 
 ## Dependencies
 
