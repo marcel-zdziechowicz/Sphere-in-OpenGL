@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "openglheader.h"   /* najpierw ten */
-#include <glfw/glfw3.h>  /* potem ten */
+#include <GLFW/glfw3.h>  /* potem ten */
 
 #include "utilities.h"
 #include "lights.h"
