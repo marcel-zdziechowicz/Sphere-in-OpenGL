@@ -242,10 +242,10 @@ void InitLights ( void )
 
 } /*InitLights*/
 
-#define RADIUS              1.0
-#define PRECISION           1.0
-#define CIRCLES             (unsigned long long)((180.0 / PRECISION) - 1)
-#define ANGLES_IN_CIRCLE    (unsigned long long)(360.0 / PRECISION)
+#define RADIUS              1
+#define PRECISION           1
+#define CIRCLES             ((180 / PRECISION) - 1)
+#define ANGLES_IN_CIRCLE    (360 / PRECISION)
 #define TRIANGLE_STRIPS     (CIRCLES - 1)
 #define TRIANGLE_FANS       2
 #define FANS                (ANGLES_IN_CIRCLE + 2)
