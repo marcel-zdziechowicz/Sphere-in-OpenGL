@@ -22,12 +22,6 @@ char    enlight = false;
 
 GLFWwindow* window = NULL;
 
-float light_angle = 0.0f;
-float pos[4] = { 1.0, 0.0, 1.0, 0.0 };
-float attenuation[4] = { 1.00, 0.66, 0.14, 1.0f};
-float pos1[4];
-float a[16];
-
 void ReshapeFunc (GLFWwindow* window, int width, int height )
 {
   float lr;
@@ -54,24 +48,7 @@ void DisplayFunc ( void )
         model_rot_angle = model_rot_angle0 + 0.78539816 * TimerToc();
         SetupModelMatrix(model_rot_axis, model_rot_angle);
     }
-
-    if (light_angle >= 360.0f) {
-        light_angle = 0.0f;
-    }
-    M4x4Identf(a);
-    M4x4RotateVf(a, 0.0f, 1.0f, 0.0f, (light_angle += 0.05f));
-    M4x4MultMVf(pos1, a, pos);
-    //SetLightPosition(0, pos1);
-    //SetLightDiffuse(0, attenuation);
-
-//#define POS 1
-//    if (attenuation[POS] == 0.0f) {
-//        attenuation[POS] = 1.0f;
-//    }
-//    attenuation[POS] -= 0.1f;
-//    SetLightDiffuse(0, attenuation);
-
-    //DrawIcosahedron ( option, enlight );
+  
     DrawSphere(option, enlight);
     glUseProgram ( 0 );
     glFlush ();
@@ -150,16 +127,12 @@ default:
   }
 } /*MotionFunc*/
 
-void JoystickFunc ( unsigned int buttonmask, int x, int y, int z ) { }
-
 void IdleFunc ( void )
 {
   model_rot_angle = model_rot_angle0 + 0.78539816 * TimerToc ();
   SetupModelMatrix ( model_rot_axis, model_rot_angle );
   DisplayFunc();
 } /*IdleFunc*/
-
-void TimerFunc ( int value ) {  }
 
 void Initialise ( int argc, char *argv[] )
 {
@@ -179,8 +152,6 @@ void Initialise ( int argc, char *argv[] )
     glfwSetKeyCallback(window, KeyboardFunc);
     glfwSetMouseButtonCallback(window, MouseFunc);
     glfwSwapInterval(true);
-  /*glutJoystickFunc ( JoystickFunc, 16 );*/
-  /*glutTimerFunc ( 0, TimerFunc, 0 );*/
   GetGLProcAddresses();
   LoadMyShaders();
   InitMyObject();

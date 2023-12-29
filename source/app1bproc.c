@@ -14,7 +14,6 @@ GLuint  program_id[2];
 GLuint  trbi, trbuf, trbbp, lsbi, lsbuf, lsbbp;
 GLint   trbsize, trbofs[5], lsbsize, lsbofs[7];
 
-GLuint  icos_vao, icos_vbo[3];
 GLuint  sphere_vao, sphere_vbo[3];
 
 float   model_rot_axis[3] = {1.0,0.0,0.0},
@@ -113,106 +112,6 @@ void RotateViewer ( int delta_xi, int delta_eta )
   SetupMVPMatrix ();
 } /*RotateViewer*/
 
-void ConstructIcosahedronVAO ( void )
-{
-#define A 0.52573115
-#define B 0.85065085
-  static const GLfloat vertpos[12][3] =
-    {{ -A,0.0, -B},{  A,0.0, -B},{0.0, -B, -A},{ -B, -A,0.0},
-     { -B,  A,0.0},{0.0,  B, -A},{  A,0.0,  B},{ -A,0.0,  B},
-     {0.0, -B,  A},{  B, -A,0.0},{  B,  A,0.0},{0.0,  B,  A}};
-  static const GLubyte vertcol[12][3] =
-    {{255,0,0},{255,127,0},{255,255,0},{127,255,0},{0,255,0},{0,255,127},
-     {0,255,255},{0,127,255},{0,0,255},{127,0,255},{255,0,255},{255,0,127}};
-  static const GLubyte vertind[62] =
-     { 0, 1, 2, 0, 3, 4, 0, 5, 1, 9, 2, 8, 3, /* lamana, od 0 */
-       7, 4, 11, 5, 10, 9, 6, 8, 7, 6, 11, 7,
-       1, 10, 6,                              /* lamana, od 25 */
-       2, 3, 4, 5, 8, 9, 10, 11,              /* 4 odcinki, od 28 */
-       0, 1, 2, 3, 4, 5, 1,                   /* wachlarz, od 36 */
-       6, 7, 8, 9, 10, 11, 7,                 /* wachlarz, od 43  */
-       1, 9, 2, 8, 3, 7, 4, 11, 5, 10, 1, 9}; /* tasma, od 50 */
-
-  //static const GLubyte indices[] =
-  //{
-  //    0, 1, 9, 8, 3, 7, 11, 5, 10, 9,
-  //    2, 8, 7, 4, 11, 10, 1, 6, 7, 4,
-  //    5, 10, 1, 2, 8, 3, 4, 11, 5, 1,
-  //    9, 2, 3, 7, 1, 2, 3, 4, 5, 7, 8,
-  //    9, 10, 11,
-  //};
-
-  glGenVertexArrays ( 1, &icos_vao );
-  glBindVertexArray ( icos_vao );
-  glGenBuffers ( 3, icos_vbo );
-  glBindBuffer ( GL_ARRAY_BUFFER, icos_vbo[0] );
-  glBufferData ( GL_ARRAY_BUFFER,
-                 12*3*sizeof(GLfloat), vertpos, GL_STATIC_DRAW );
-  glEnableVertexAttribArray ( 0 );
-  glVertexAttribPointer ( 0, 3, GL_FLOAT, GL_FALSE,
-                          3*sizeof(GLfloat), (GLvoid*)0 );
-  glBindBuffer ( GL_ARRAY_BUFFER, icos_vbo[1] );
-  glBufferData ( GL_ARRAY_BUFFER,
-                 12*3*sizeof(GLubyte), vertcol, GL_STATIC_DRAW );
-  glEnableVertexAttribArray ( 1 );
-  glVertexAttribPointer ( 1, 3, GL_UNSIGNED_BYTE, GL_TRUE,
-                          3*sizeof(GLubyte), (GLvoid*)0 );
-  glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, icos_vbo[2] );
-  glBufferData ( GL_ELEMENT_ARRAY_BUFFER,
-                 62*sizeof(GLubyte), vertind, GL_STATIC_DRAW );
-  ExitIfGLError ( "ConstructIcosahedronVAO" );
-} /*ConstructIcosahedronVAO*/
-
-void DrawIcosahedron ( int opt, char enlight )
-{
-  glBindVertexArray ( icos_vao );
-  switch ( opt ) {
-case 0:    /* wierzcholki */
-    glUseProgram ( program_id[0] );
-    glPointSize ( 5.0 );
-    glDrawArrays ( GL_POINTS, 0, 12 );
-    break;
-case 1:    /* krawedzie */
-    glUseProgram ( program_id[0] );
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, icos_vbo[2] );
-    glDrawElements ( GL_LINE_STRIP, 25,
-                     GL_UNSIGNED_BYTE, (GLvoid*)0 );
-    glDrawElements ( GL_LINE_STRIP, 3,
-                     GL_UNSIGNED_BYTE, (GLvoid*)(25*sizeof(GLubyte)) );
-    glDrawElements ( GL_LINES, 8, 
-                     GL_UNSIGNED_BYTE, (GLvoid*)(28*sizeof(GLubyte)) );
-    break;
-default:   /* sciany */
-    glUseProgram ( program_id[enlight ? 1 : 0] );
-    glBindBuffer ( GL_ELEMENT_ARRAY_BUFFER, icos_vbo[2] );
-    glDrawElements ( GL_TRIANGLE_FAN, 7,
-                     GL_UNSIGNED_BYTE, (GLvoid*)(36*sizeof(GLubyte)) );
-    glDrawElements ( GL_TRIANGLE_FAN, 7,
-                     GL_UNSIGNED_BYTE, (GLvoid*)(43*sizeof(GLubyte)) );
-    glDrawElements ( GL_TRIANGLE_STRIP, 12,
-                     GL_UNSIGNED_BYTE, (GLvoid*)(50*sizeof(GLubyte)) );
-
-    //glDrawElements(GL_TRIANGLE_FAN, 17, GL_UNSIGNED_BYTE, (GLvoid*)0);
-    //glDrawElements(GL_TRIANGLE_FAN, 17, GL_UNSIGNED_BYTE, (GLvoid*)(17 * sizeof(GLubyte)));
-    //glDrawElements(GL_TRIANGLE_FAN, 5, GL_UNSIGNED_BYTE, (GLvoid*)(34 * sizeof(GLubyte)));
-    //glDrawElements(GL_TRIANGLE_FAN, 5, GL_UNSIGNED_BYTE, (GLvoid*)(39 * sizeof(GLubyte)));
-    break;
-  }
-} /*DrawIcosahedron*/
-
-float customRand() {
-    // Seed the random number generator with the current time
-    srand((unsigned int)time(NULL));
-
-    // Generate a random integer between 0 and RAND_MAX
-    int randomInt = rand();
-
-    // Map the random integer to a float between 0 and 1
-    float randomValue = (float)randomInt / RAND_MAX;
-
-    return randomValue;
-}
-
 void InitLights ( void )
 {
   GLfloat amb0[4] = { 0.2, 0.2, 0.3, 1.0 };
@@ -220,26 +119,11 @@ void InitLights ( void )
   GLfloat pos0[4] = { 1.0, 1.0, 1.0, 0.0 };
   GLfloat atn0[3] = { 1.0, 0.0, 0.0 };
 
-  GLfloat light2[15] =
-  {
-      0.2, 0.2, 0.3, 1.0,
-      0.8, 0.8, 0.8, 1.0,
-      -1.0, 1.0, 1.0, 0.0,
-      1.0, 0.0, 0.0
-  };
-
   SetLightAmbient ( 0, amb0 );
   SetLightDiffuse ( 0, dif0 );
   SetLightPosition ( 0, pos0 );
   SetLightAttenuation ( 0, atn0 );
   SetLightOnOff ( 0, 1 );
-
-  SetLightAmbient(1, light2);
-  SetLightDiffuse(1, light2 + 4);
-  SetLightPosition(1, light2 + 8);
-  SetLightAttenuation(1, light2 + 12);
-  SetLightOnOff(1, 0);
-
 } /*InitLights*/
 
 #define RADIUS              1
@@ -250,26 +134,14 @@ void InitLights ( void )
 #define TRIANGLE_FANS       2
 #define FANS                (ANGLES_IN_CIRCLE + 2)
 #define STRIPS              (ANGLES_IN_CIRCLE * 2 + 2)
-//#define SIZE                (int)(3 * ((180.0 * 360.0) / (PRECISION * PRECISION)) + 6 - (3 * 360.0 / PRECISION))
-#define SIZE                (unsigned long long)(3 * CIRCLES * ANGLES_IN_CIRCLE + 6)
+#define SIZE                (3 * CIRCLES * ANGLES_IN_CIRCLE + 6)
+#define INDICES             ((TRIANGLE_STRIPS * STRIPS) + (TRIANGLE_FANS * FANS))
 #define POINTS              (SIZE / 3)
-#define PI       3.14159265358979323846   // pi
+#define PI                  3.14159265358979323846
 #define degToRad(angleInDegrees) ((angleInDegrees) * PI / 180.0)
-#define INDICES ((TRIANGLE_STRIPS * STRIPS) + (TRIANGLE_FANS * FANS))
 
 void ConstructSphereVAO(void)
 {
-    // TODO: Figure out why last triangle strip doesn't show up
-
-    // ORIGIN   0.0, 0.0, 0.0
-    // TOP      0.0, 0.5, 0.0
-    // BOTTOM   0.0,-0.5, 0.0
-
-    // CIRCLES = 180.0 / PRECISION
-    // CORDS = 3 (x, y, z)
-    // VERTICES = 360.0 / PRECISION
-    // VERTPOS = CIRCLES * CORDS * VERTICES + 2
-
     static float vertices[SIZE];
     static float color[SIZE];
     static GLuint indices[INDICES];
@@ -341,7 +213,7 @@ void ConstructSphereVAO(void)
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sphere_vbo[2]);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-}
+} /*ConstructSphere*/
 
 void DrawSphere(int opt, char enlight)
 {
@@ -367,9 +239,7 @@ void DrawSphere(int opt, char enlight)
         }
 
     }
-
-    
-}
+} /*DrawSphere*/
 
 void InitMyObject ( void )
 {
@@ -378,7 +248,6 @@ void InitMyObject ( void )
   memset ( &light, 0, sizeof(LightBl) );
   SetupModelMatrix ( model_rot_axis, model_rot_angle );
   InitViewMatrix ();
-  //ConstructIcosahedronVAO ();
   ConstructSphereVAO();
   InitLights ();
 } /*InitMyObject*/
@@ -394,8 +263,8 @@ void Cleanup ( void )
   glDeleteProgram ( program_id[1] );
   glDeleteBuffers ( 1, &trbuf );
   glDeleteBuffers ( 1, &lsbuf );
-  glDeleteVertexArrays ( 1, &icos_vao );
-  glDeleteBuffers ( 3, icos_vbo );
+  glDeleteVertexArrays ( 1, &sphere_vao );
+  glDeleteBuffers ( 3, sphere_vbo );
   ExitIfGLError ( "Cleanup" );
   glfwDestroyWindow(window);
 } /*Cleanup*/
