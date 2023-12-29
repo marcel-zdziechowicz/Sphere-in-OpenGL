@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 3.26.3)
 project(Sphere-in-OpenGL)
 
-file(GLOB_RECURSE TestSources source/*.cpp source/*.h)
+file(TestSources 
+    source/app1b.c
+    source/app1bproc.c 
+    source/lights.c 
+    source/timer.c 
+    source/utilities.c 
+    source/app1b.h 
+    source/lights.h 
+    source/openglheader.h 
+    source/utilities.h 
+)
 add_executable(${PROJECT_NAME} ${TestSources})
 #target_precompile_headers(${PROJECT_NAME} PRIVATE source/*.h)
 
