@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.26.3)
 project(Sphere-in-OpenGL)
 
-
 # glfw
 add_subdirectory(third_party/glfw EXCLUDE_FROM_ALL)
 
