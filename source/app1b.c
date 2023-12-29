@@ -170,7 +170,7 @@ void Initialise ( int argc, char *argv[] )
 
     window = glfwCreateWindow(480, 360, "Aplikacja pierwsza B", NULL, NULL);
     if (!window) {
-        fprintf_s(stderr, "Error: Could not create window!\n");
+        fprintf(stderr, "Error: Could not create window!\n");
         exit(EXIT_FAILURE);
     }
 

@@ -22,7 +22,7 @@ void PrintGLVersion ( void )
 
 void ExitOnError ( const char *msg )
 {
-  fprintf_s( stderr, "Error: %s\n", msg );
+  fprintf( stderr, "Error: %s\n", msg );
   exit ( 1 );
 } /*ExitOnError*/
 
@@ -31,7 +31,7 @@ void ExitIfGLError ( const char *msg )
   GLenum err;
 
   if ( (err = glGetError ()) != GL_NO_ERROR ) {
-    fprintf_s( stderr, "Error: %s\n", msg);
+    fprintf( stderr, "Error: %s\n", msg);
     exit ( 1 );
   }
 } /*ExitIfGLError*/
@@ -39,7 +39,7 @@ void ExitIfGLError ( const char *msg )
 void GetGLProcAddresses ( void )
 {
   if (!gladLoadGL(glfwGetProcAddress)) {
-      fprintf_s(stderr, "Error: Could not load OpenGL!\n");
+      fprintf(stderr, "Error: Could not load OpenGL!\n");
       exit(EXIT_FAILURE);
   }
 } /*GetGLProcAddresses*/
@@ -73,7 +73,7 @@ GLuint CompileShaderStrings ( GLenum shader_type, int nsl,
     if ( logsize > 1 ) {
       if ( (log = malloc ( logsize+1 )) != 0 ) {
         glGetShaderInfoLog ( shader_id, logsize, &logsize, log );
-        fprintf_s( stderr, "%s\n", log );
+        fprintf( stderr, "%s\n", log );
         free ( log );
       }
     }
