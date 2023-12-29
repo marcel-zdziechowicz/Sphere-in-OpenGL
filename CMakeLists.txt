@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.26.3)
 project(Sphere-in-OpenGL)
 
-file(TestSources 
+set(TestSources 
     source/app1b.c
     source/app1bproc.c 
     source/lights.c 
