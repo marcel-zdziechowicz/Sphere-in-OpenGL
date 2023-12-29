@@ -1,5 +1,4 @@
-Sphere-in-OpenGL
-==============
+# Sphere-in-OpenGL
 ---
 ## About
 
@@ -11,13 +10,13 @@ Long story short. While I was learning Computer Graphics from book ["_OpenGL i G
 
 ## Dependencies
 
-####To build the project you'll need:
+#### To build the project you'll need:
 
 * git
 * CMake
 * C/C++ compiler (gcc, clang, etc.)
 
-#####Additionally on Linux (tested on Ubuntu):
+##### Additionally on Linux (tested on Ubuntu):
 
   * libgl1-mesa-dev
   * mesa-utils
