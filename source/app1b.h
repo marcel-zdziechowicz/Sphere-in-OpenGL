@@ -13,7 +13,6 @@ extern GLuint  shader_id[5];
 extern GLuint  program_id[2];
 extern GLuint  trbi, trbuf, trbbp;
 extern GLint   trbsize, trbofs[5];
-extern GLuint  icos_vao, icos_vbo[3];
 extern float   model_rot_axis[3], model_rot_angle0, model_rot_angle;
 extern const float viewer_pos0[4];
 extern TransBl trans;
@@ -32,9 +31,6 @@ void SetupMVPMatrix ( void );
 void SetupModelMatrix ( float axis[3], float angle );
 void InitViewMatrix ( void );
 void RotateViewer ( int deltaxi, int deltaeta );
-
-void ConstructIcosahedronVAO ( void );
-void DrawIcosahedron ( int opt, char enlight );
 void InitLights ( void );
 
 extern GLuint sphere_vao, sphere_vbo[3];
@@ -53,7 +49,6 @@ void DisplayFunc ( void );
 void KeyboardFunc(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseFunc(GLFWwindow* window, int button, int state, int mods);
 void MotionFunc ( int x, int y );
-void TimerFunc ( int value );
 void IdleFunc ( void );
 
 void Initialise ( int argc, char *argv[] );
