@@ -21,6 +21,7 @@ char    animate = false;
 char    enlight = false;
 
 GLFWwindow* window = NULL;
+double x, y;
 
 void ReshapeFunc (GLFWwindow* window, int width, int height )
 {
@@ -48,7 +49,8 @@ void DisplayFunc ( void )
         model_rot_angle = model_rot_angle0 + 0.78539816 * TimerToc();
         SetupModelMatrix(model_rot_axis, model_rot_angle);
     }
-
+    glfwGetCursorPos(window, &x, &y);
+    MotionFunc((int)x, (int)y);
     DrawSphere(option, enlight);
     glUseProgram ( 0 );
     glFlush ();
@@ -119,7 +121,7 @@ case STATE_TURNING:
     if ( x != last_xi || y != last_eta ) {
       RotateViewer ( x-last_xi, y-last_eta );
       last_xi = x,  last_eta = y;
-      DisplayFunc();
+      //DisplayFunc();
     }
     break;
 default:
