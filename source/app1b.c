@@ -48,7 +48,7 @@ void DisplayFunc ( void )
         model_rot_angle = model_rot_angle0 + 0.78539816 * TimerToc();
         SetupModelMatrix(model_rot_axis, model_rot_angle);
     }
-  
+
     DrawSphere(option, enlight);
     glUseProgram ( 0 );
     glFlush ();
@@ -141,7 +141,7 @@ void Initialise ( int argc, char *argv[] )
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(480, 360, "Aplikacja pierwsza B", NULL, NULL);
+    window = glfwCreateWindow(480, 360, "Sphere", NULL, NULL);
     if (!window) {
         fprintf(stderr, "Error: Could not create window!\n");
         exit(EXIT_FAILURE);
