@@ -76,10 +76,10 @@ void KeyboardFunc (GLFWwindow* window, int key, int scancode, int action, int mo
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, GL_TRUE);
     }
-    else if (key == GLFW_KEY_W && action == GLFW_PRESS) {
+    else if (key == GLFW_KEY_V && action == GLFW_PRESS) {
         option = 0;
     }
-    else if (key == GLFW_KEY_K && action == GLFW_PRESS) {
+    else if (key == GLFW_KEY_E && action == GLFW_PRESS) {
         option = 1;
     }
     else if (key == GLFW_KEY_S && action == GLFW_PRESS) {
